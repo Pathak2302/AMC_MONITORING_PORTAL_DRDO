@@ -2,6 +2,9 @@
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3001/api";
 
+// Check if we're in mock mode
+const MOCK_MODE = import.meta.env.VITE_MOCK_MODE === "true";
+
 // Request configuration
 interface RequestConfig extends RequestInit {
   timeout?: number;
