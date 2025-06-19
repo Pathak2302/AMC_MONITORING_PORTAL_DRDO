@@ -146,11 +146,20 @@ export const uploadFile = async (
 
 // Health check utility
 export const healthCheck = async (): Promise<{
-  status: string;
+  success: boolean;
+  message: string;
   timestamp: string;
 }> => {
   try {
-    return await api.get("/health");
+    // Health check endpoint is at root level, not under /api
+    const response = await fetch(`${API_BASE_URL.replace("/api", "")}/health`);
+    if (!response.ok) {
+      throw new ApiError(
+        `Health check failed: ${response.statusText}`,
+        response.status,
+      );
+    }
+    return await response.json();
   } catch (error) {
     console.error("Health check failed:", error);
     throw error;
