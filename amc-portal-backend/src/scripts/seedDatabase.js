@@ -1,12 +1,37 @@
 import { User } from "../models/User.js";
 import { Task } from "../models/Task.js";
 import { Notification } from "../models/Notification.js";
-import { closePool } from "../config/database.js";
+import { query, closePool } from "../config/database.js";
 
 const seedData = async () => {
   console.log("🌱 Seeding database with sample data...");
 
   try {
+    // First check if database connection works
+    await query("SELECT 1");
+    console.log("✅ Database connection verified");
+
+    // Check if users table exists
+    const tableCheck = await query(`
+      SELECT EXISTS (
+        SELECT FROM information_schema.tables
+        WHERE table_schema = 'public'
+        AND table_name = 'users'
+      );
+    `);
+
+    if (!tableCheck.rows[0].exists) {
+      console.error("❌ Tables don't exist. Run 'npm run db:setup' first");
+      process.exit(1);
+    }
+
+    // Check if data already exists
+    const userCount = await query("SELECT COUNT(*) FROM users");
+    if (parseInt(userCount.rows[0].count) > 0) {
+      console.log("⚠️  Data already exists. Skipping seed...");
+      console.log("💡 To re-seed, run: npm run db:reset");
+      return;
+    }
     // Create admin user
     const admin = await User.create({
       name: "Admin User",
