@@ -12,6 +12,8 @@ import { Server } from "socket.io";
 import authRoutes from "./routes/auth.js";
 import taskRoutes from "./routes/tasks.js";
 import notificationRoutes from "./routes/notifications.js";
+import userRoutes from "./routes/users.js";
+import activityRoutes from "./routes/activities.js";
 
 // Import database connection
 import "./config/database.js";
