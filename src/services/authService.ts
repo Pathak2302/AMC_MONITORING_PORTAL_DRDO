@@ -27,10 +27,13 @@ export interface SignupRequest {
 }
 
 export interface SignupResponse {
-  user: User;
-  token: string;
-  refreshToken: string;
-  expiresAt: string;
+  success: boolean;
+  message: string;
+  data: {
+    user: User;
+    accessToken: string;
+    refreshToken: string;
+  };
 }
 
 export interface RefreshTokenRequest {
