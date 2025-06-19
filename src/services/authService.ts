@@ -62,11 +62,14 @@ export const authService = {
         credentials,
       );
 
-      // Store token and user data
-      if (response.token) {
-        const userData = { ...response.user, token: response.token };
+      // Store token and user data - backend response has 'data' wrapper
+      if (response.data?.accessToken) {
+        const userData = {
+          ...response.data.user,
+          token: response.data.accessToken,
+        };
         localStorage.setItem("user", JSON.stringify(userData));
-        localStorage.setItem("refreshToken", response.refreshToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
       }
 
       return response;
