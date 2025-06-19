@@ -31,8 +31,28 @@ pool.on("connect", () => {
 
 pool.on("error", (err) => {
   console.error("❌ Database connection error:", err);
-  process.exit(-1);
+  console.error(
+    "💡 Make sure PostgreSQL is running and credentials are correct",
+  );
+  console.error("📚 Check DATABASE_SETUP.md for setup instructions");
 });
+
+// Test initial connection
+const testConnection = async () => {
+  try {
+    const client = await pool.connect();
+    console.log("✅ Database connection test successful");
+    client.release();
+  } catch (err) {
+    console.error("❌ Failed to connect to database:", err.message);
+    console.error(
+      "💡 Make sure PostgreSQL is running and credentials are correct",
+    );
+  }
+};
+
+// Test connection on startup
+testConnection();
 
 // Helper function to execute queries
 export const query = async (text, params) => {
