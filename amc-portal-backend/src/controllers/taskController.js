@@ -102,7 +102,7 @@ export const createTask = async (req, res) => {
       req,
     );
 
-    // If task is assigned to someone else, log assignment activity
+    // If task is assigned to someone else, log assignment activity and create notification
     if (assignedTo && assignedTo !== req.user.id) {
       await logActivity(
         req.user.id,
@@ -111,6 +111,9 @@ export const createTask = async (req, res) => {
         { taskId: task.id, assignedTo },
         req,
       );
+
+      // Create notification for the assigned user
+      await Notification.createTaskNotification(task, assignedTo);
     }
 
     const taskWithDetails = await Task.findById(task.id);
