@@ -1,7 +1,13 @@
 import { Task } from "../models/Task.js";
 import { User } from "../models/User.js";
+import { Notification } from "../models/Notification.js";
 import { logActivity, ACTIVITY_TYPES } from "../utils/activityLogger.js";
 import { body, validationResult } from "express-validator";
+import {
+  isValidTaskCategory,
+  isValidTaskPriority,
+  isValidTaskStatus,
+} from "../types/index.js";
 
 export const createTaskValidation = [
   body("title").trim().isLength({ min: 1 }).withMessage("Title is required"),
