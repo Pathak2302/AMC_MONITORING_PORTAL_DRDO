@@ -91,13 +91,19 @@ export const authService = {
   // Register new user
   signup: async (userData: SignupRequest): Promise<SignupResponse> => {
     try {
-      const response = await api.post<SignupResponse>("/auth/signup", userData);
+      const response = await api.post<SignupResponse>(
+        "/auth/register",
+        userData,
+      );
 
-      // Store token and user data
-      if (response.token) {
-        const userWithToken = { ...response.user, token: response.token };
+      // Store token and user data - backend response has 'data' wrapper
+      if (response.data?.accessToken) {
+        const userWithToken = {
+          ...response.data.user,
+          token: response.data.accessToken,
+        };
         localStorage.setItem("user", JSON.stringify(userWithToken));
-        localStorage.setItem("refreshToken", response.refreshToken);
+        localStorage.setItem("refreshToken", response.data.refreshToken);
       }
 
       return response;
