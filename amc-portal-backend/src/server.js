@@ -90,6 +90,8 @@ app.get("/health", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
 app.use("/api/notifications", notificationRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/activities", activityRoutes);
 
 // WebSocket connection handling
 io.on("connection", (socket) => {
