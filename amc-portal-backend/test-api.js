@@ -50,6 +50,9 @@ async function runTests() {
   log(colors.cyan, "\n🧪 AMC Portal Backend API Tests");
   log(colors.cyan, "================================\n");
 
+  // Check if server is running
+  log(colors.yellow, "🔍 Checking if backend server is running...");
+
   let adminToken = null;
   let userToken = null;
 
