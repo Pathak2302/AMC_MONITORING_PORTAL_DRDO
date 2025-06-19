@@ -11,6 +11,9 @@
     "db:setup": "node src/scripts/setupDatabase.js",
     "db:seed": "node src/scripts/seedDatabase.js",
     "db:reset": "npm run db:setup && npm run db:seed",
+    "db:setup-simple": "node setup-simple.js",
+    "db:test": "node test-db-connection.js",
+    "diagnose": "node diagnose-and-fix.js",
     "test:api": "node test-api.js",
     "postinstall": "echo '✅ Dependencies installed. Run npm run db:setup && npm run db:seed to initialize database.'"
   },
