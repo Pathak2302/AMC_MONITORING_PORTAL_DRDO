@@ -10,7 +10,9 @@
     "test": "jest",
     "db:setup": "node src/scripts/setupDatabase.js",
     "db:seed": "node src/scripts/seedDatabase.js",
-    "db:reset": "node src/scripts/resetDatabase.js"
+    "db:reset": "npm run db:setup && npm run db:seed",
+    "test:api": "node test-api.js",
+    "postinstall": "echo '✅ Dependencies installed. Run npm run db:setup && npm run db:seed to initialize database.'"
   },
   "dependencies": {
     "express": "^4.18.2",
